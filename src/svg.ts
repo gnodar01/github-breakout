@@ -17,6 +17,8 @@ const SECONDS_PER_FRAME = 1 / 30; // Duration of each frame in seconds (30 FPS)
 const MAX_FRAMES = 30000; // Maximum number of frames to simulate
 const BALL_SPEED = 10; // Speed of the ball in pixels per frame
 
+const WHITESPACE_ROWS = 4; // number of rows whitespace takes up
+
 export type ColorPalette = [string, string, string, string, string];
 
 // GitHub colors
@@ -38,6 +40,7 @@ const GITHUB_DARK: ColorPalette = [
 // Options for the SVG generation
 export interface Options {
   enableGhostBricks?: boolean;
+  enableWhitespace?: boolean;
   paddleColor?: string;
   ballColor?: string;
   bricksColors?: "github_light" | "github_dark" | ColorPalette;
@@ -353,6 +356,7 @@ export async function generateSVG(
 ): Promise<string> {
   const {
     enableGhostBricks = true,
+    enableWhitespace = false,
     paddleColor = "#1F6FEB",
     ballColor = "#1F6FEB",
     bricksColors,
@@ -369,8 +373,10 @@ export async function generateSVG(
   const canvasWidth =
     brickColumnCount * (BRICK_SIZE + BRICK_GAP) + PADDING * 2 - BRICK_GAP; // right edge flush
 
+  const numRows = enableWhitespace ? 7 + WHITESPACE_ROWS : 7;
+
   // Bricks area height
-  const bricksTotalHeight = 7 * (BRICK_SIZE + BRICK_GAP) - BRICK_GAP;
+  const bricksTotalHeight = numRows * (BRICK_SIZE + BRICK_GAP) - BRICK_GAP;
 
   // Calculate the vertical position of the paddle
   // The paddle sits below the last row of bricks plus the user-specified gap
@@ -393,13 +399,16 @@ export async function generateSVG(
   // Build bricks with colorClass, skip missing days (null color)
   const bricks: Brick[] = [];
   for (let c = 0; c < brickColumnCount; c++) {
-    for (let r = 0; r < 7; r++) {
+    for (let r = 0; r < numRows; r++) {
       const day = (colorDays.days[c] && colorDays.days[c][r]) || null;
       if (!day) continue; // skip bricks for missing days
 
       bricks.push({
         x: c * (BRICK_SIZE + BRICK_GAP) + PADDING,
-        y: r * (BRICK_SIZE + BRICK_GAP) + PADDING,
+        y:
+          (enableWhitespace ? r + WHITESPACE_ROWS : r) *
+            (BRICK_SIZE + BRICK_GAP) +
+          PADDING,
         colorClass: `c${day.level}`,
         status: "visible",
         hasCommit: day.contributionCount > 0,

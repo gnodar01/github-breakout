@@ -17,6 +17,9 @@ inputs:
   enable_ghost_bricks:
     description: "Ghost bricks for days without contribution"
     required: false
+  enable_whitespace:
+    description: "Whitespace on top, like OG breakout"
+    required: false
   output_path:
     description: "Output path for SVGs"
     required: false

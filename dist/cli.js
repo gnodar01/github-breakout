@@ -32,7 +32,7 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var _a, _b, _c;
+var _a, _b, _c, _d, _e;
 Object.defineProperty(exports, "__esModule", { value: true });
 const svg_1 = require("./svg");
 const fs = __importStar(require("fs"));
@@ -53,6 +53,7 @@ function getInput(name) {
  */
 function parseArgs(argv) {
     const parsed = {
+        whitespace: false,
         defaultColors: false,
         dark: false,
         light: false,
@@ -64,6 +65,9 @@ function parseArgs(argv) {
         }
         else if (arg === "--token" && i + 1 < argv.length) {
             parsed.token = argv[++i];
+        }
+        else if (arg === "--whitespace") {
+            parsed.whitespace = true;
         }
         else if (arg === "--default-colors") {
             parsed.defaultColors = true;
@@ -105,10 +109,11 @@ const bricksColorsFromInput = bricksColorsInput.length === 5
 const options = {
     username: cliArgs.username || getInput("GITHUB_USERNAME"),
     token: cliArgs.token || getInput("GITHUB_TOKEN"),
+    whitespace: (_b = cliArgs.whitespace) !== null && _b !== void 0 ? _b : ((_c = getInput("ENABLE_WHITESPACE")) !== null && _c !== void 0 ? _c : "false") === "true",
     defaultColors: cliArgs.defaultColors,
     dark: cliArgs.dark,
     light: cliArgs.light,
-    enableGhostBricks: (_b = cliArgs.enableGhostBricks) !== null && _b !== void 0 ? _b : ((_c = getInput("ENABLE_GHOST_BRICKS")) !== null && _c !== void 0 ? _c : "true") === "true",
+    enableGhostBricks: (_d = cliArgs.enableGhostBricks) !== null && _d !== void 0 ? _d : ((_e = getInput("ENABLE_GHOST_BRICKS")) !== null && _e !== void 0 ? _e : "true") === "true",
     paddleColor: cliArgs.paddleColor || getInput("PADDLE_COLOR"),
     ballColor: cliArgs.ballColor || getInput("BALL_COLOR"),
     bricksColors: cliArgs.bricksColors || bricksColorsFromInput,
@@ -162,6 +167,7 @@ if (options.dark) {
 // Build images
 Promise.all(variants.map((variant) => (0, svg_1.generateSVG)(options.username, options.token, {
     enableGhostBricks: options.enableGhostBricks,
+    enableWhitespace: options.whitespace,
     paddleColor: variant.name === "custom" ? options.paddleColor : undefined,
     ballColor: variant.name === "custom" ? options.ballColor : undefined,
     bricksColors: variant.bricksColors,

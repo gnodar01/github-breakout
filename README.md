@@ -55,6 +55,7 @@ The action generates dark, light and optionally custom SVGs, and has these input
 - github_username (required): GitHub username
 - github_token: GitHub token used to fetch the contributions. Defaults to the action token if empty.
 - enable_ghost_bricks: Enable ghost bricks for days without contribution (default to true)
+- enable_whitespace: Enable whitespace on top like OG breakout (default to false)
 - output_path: Output path for SVGs (default is `./output/`)
 - paddle_color: Paddle color for `custom.svg`
 - ball_color: Ball color for `custom.svg`

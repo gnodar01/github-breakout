@@ -6,6 +6,7 @@ import * as path from "path";
 interface ParsedArgs {
   username?: string; // GitHub username
   token?: string; // GitHub token
+  whitespace?: boolean; // Include whitespace at top
   defaultColors?: boolean; // Use default colors
   light?: boolean; // Generate light mode SVG
   dark?: boolean; // Generate dark mode SVG
@@ -33,6 +34,7 @@ function getInput(name: string): string | undefined {
  */
 function parseArgs(argv: string[]): ParsedArgs {
   const parsed: ParsedArgs = {
+    whitespace: false,
     defaultColors: false,
     dark: false,
     light: false,
@@ -43,6 +45,8 @@ function parseArgs(argv: string[]): ParsedArgs {
       parsed.username = argv[++i];
     } else if (arg === "--token" && i + 1 < argv.length) {
       parsed.token = argv[++i];
+    } else if (arg === "--whitespace") {
+      parsed.whitespace = true;
     } else if (arg === "--default-colors") {
       parsed.defaultColors = true;
     } else if (arg === "--dark") {
@@ -86,6 +90,8 @@ const bricksColorsFromInput =
 const options = {
   username: cliArgs.username || getInput("GITHUB_USERNAME"),
   token: cliArgs.token || getInput("GITHUB_TOKEN"),
+  whitespace:
+    cliArgs.whitespace ?? (getInput("ENABLE_WHITESPACE") ?? "false") === "true",
   defaultColors: cliArgs.defaultColors,
   dark: cliArgs.dark,
   light: cliArgs.light,
@@ -161,6 +167,7 @@ Promise.all(
   variants.map((variant) =>
     generateSVG(options.username!, options.token!, {
       enableGhostBricks: options.enableGhostBricks,
+      enableWhitespace: options.whitespace,
       paddleColor: variant.name === "custom" ? options.paddleColor : undefined,
       ballColor: variant.name === "custom" ? options.ballColor : undefined,
       bricksColors: variant.bricksColors,
