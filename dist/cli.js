@@ -66,7 +66,7 @@ function parseArgs(argv) {
         else if (arg === "--token" && i + 1 < argv.length) {
             parsed.token = argv[++i];
         }
-        else if (arg === "--enable_whitespace") {
+        else if (arg === "--enable-whitespace") {
             parsed.enableWhitespace = true;
         }
         else if (arg === "--default-colors") {
@@ -119,6 +119,7 @@ const options = {
     bricksColors: cliArgs.bricksColors || bricksColorsFromInput,
     path: cliArgs.outputPath || getInput("INPUT_OUTPUT_PATH") || "output",
 };
+console.log(Object.assign(Object.assign({}, options), { token: "<lolno>" }));
 if (!options.username || !options.token) {
     console.error("Error: Both a GitHub username and token are required.\n" +
         "Provide via --username/--token or set GITHUB_USERNAME and GITHUB_TOKEN as environment variables.\n" +

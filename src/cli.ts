@@ -45,7 +45,7 @@ function parseArgs(argv: string[]): ParsedArgs {
       parsed.username = argv[++i];
     } else if (arg === "--token" && i + 1 < argv.length) {
       parsed.token = argv[++i];
-    } else if (arg === "--enable_whitespace") {
+    } else if (arg === "--enable-whitespace") {
       parsed.enableWhitespace = true;
     } else if (arg === "--default-colors") {
       parsed.defaultColors = true;
@@ -104,6 +104,8 @@ const options = {
   bricksColors: cliArgs.bricksColors || bricksColorsFromInput,
   path: cliArgs.outputPath || getInput("INPUT_OUTPUT_PATH") || "output",
 };
+
+console.log({ ...options, token: "<lolno>" });
 
 if (!options.username || !options.token) {
   console.error(
