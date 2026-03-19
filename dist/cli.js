@@ -53,7 +53,7 @@ function getInput(name) {
  */
 function parseArgs(argv) {
     const parsed = {
-        whitespace: false,
+        enableWhitespace: false,
         defaultColors: false,
         dark: false,
         light: false,
@@ -66,8 +66,8 @@ function parseArgs(argv) {
         else if (arg === "--token" && i + 1 < argv.length) {
             parsed.token = argv[++i];
         }
-        else if (arg === "--whitespace") {
-            parsed.whitespace = true;
+        else if (arg === "--enable_whitespace") {
+            parsed.enableWhitespace = true;
         }
         else if (arg === "--default-colors") {
             parsed.defaultColors = true;
@@ -109,7 +109,7 @@ const bricksColorsFromInput = bricksColorsInput.length === 5
 const options = {
     username: cliArgs.username || getInput("GITHUB_USERNAME"),
     token: cliArgs.token || getInput("GITHUB_TOKEN"),
-    whitespace: (_b = cliArgs.whitespace) !== null && _b !== void 0 ? _b : ((_c = getInput("ENABLE_WHITESPACE")) !== null && _c !== void 0 ? _c : "false") === "true",
+    enableWhitespace: (_b = cliArgs.enableWhitespace) !== null && _b !== void 0 ? _b : ((_c = getInput("ENABLE_WHITESPACE")) !== null && _c !== void 0 ? _c : "false") === "true",
     defaultColors: cliArgs.defaultColors,
     dark: cliArgs.dark,
     light: cliArgs.light,
@@ -167,7 +167,7 @@ if (options.dark) {
 // Build images
 Promise.all(variants.map((variant) => (0, svg_1.generateSVG)(options.username, options.token, {
     enableGhostBricks: options.enableGhostBricks,
-    enableWhitespace: options.whitespace,
+    enableWhitespace: options.enableWhitespace,
     paddleColor: variant.name === "custom" ? options.paddleColor : undefined,
     ballColor: variant.name === "custom" ? options.ballColor : undefined,
     bricksColors: variant.bricksColors,
