@@ -60,7 +60,6 @@ function getInput(name) {
  */
 function parseArgs(argv) {
     const parsed = {
-        enableWhitespace: false,
         defaultColors: false,
         dark: false,
         light: false,
@@ -108,6 +107,8 @@ function parseArgs(argv) {
 }
 // Parse CLI arguments
 const cliArgs = parseArgs(process.argv.slice(2));
+console.log("cli args:");
+console.log(Object.assign(Object.assign({}, cliArgs), { token: "<lolno>" }));
 // Build options from CLI args and environment variables
 const bricksColorsInput = ((_a = getInput("BRICKS_COLORS")) !== null && _a !== void 0 ? _a : "").split(",");
 const bricksColorsFromInput = bricksColorsInput.length === 5
@@ -126,6 +127,7 @@ const options = {
     bricksColors: cliArgs.bricksColors || bricksColorsFromInput,
     path: cliArgs.outputPath || getInput("OUTPUT_PATH") || "output",
 };
+console.log("parsed options:");
 console.log(Object.assign(Object.assign({}, options), { token: "<lolno>" }));
 if (!options.username || !options.token) {
     console.error("Error: Both a GitHub username and token are required.\n" +

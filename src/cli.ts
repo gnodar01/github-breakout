@@ -44,7 +44,6 @@ function getInput(name: string): string | undefined {
  */
 function parseArgs(argv: string[]): ParsedArgs {
   const parsed: ParsedArgs = {
-    enableWhitespace: false,
     defaultColors: false,
     dark: false,
     light: false,
@@ -90,6 +89,9 @@ function parseArgs(argv: string[]): ParsedArgs {
 // Parse CLI arguments
 const cliArgs = parseArgs(process.argv.slice(2));
 
+console.log("cli args:");
+console.log({ ...cliArgs, token: "<lolno>" });
+
 // Build options from CLI args and environment variables
 const bricksColorsInput = (getInput("BRICKS_COLORS") ?? "").split(",");
 const bricksColorsFromInput =
@@ -115,6 +117,7 @@ const options = {
   path: cliArgs.outputPath || getInput("OUTPUT_PATH") || "output",
 };
 
+console.log("parsed options:");
 console.log({ ...options, token: "<lolno>" });
 
 if (!options.username || !options.token) {
