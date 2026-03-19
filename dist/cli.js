@@ -102,22 +102,22 @@ function parseArgs(argv) {
 // Parse CLI arguments
 const cliArgs = parseArgs(process.argv.slice(2));
 // Build options from CLI args and environment variables
-const bricksColorsInput = ((_a = getInput("INPUT_BRICKS_COLORS")) !== null && _a !== void 0 ? _a : "").split(",");
+const bricksColorsInput = ((_a = getInput("BRICKS_COLORS")) !== null && _a !== void 0 ? _a : "").split(",");
 const bricksColorsFromInput = bricksColorsInput.length === 5
     ? bricksColorsInput
     : undefined;
 const options = {
-    username: cliArgs.username || getInput("INPUT_GITHUB_USERNAME"),
-    token: cliArgs.token || getInput("INPUT_GITHUB_TOKEN"),
-    enableWhitespace: (_b = cliArgs.enableWhitespace) !== null && _b !== void 0 ? _b : ((_c = getInput("INPUT_ENABLE_WHITESPACE")) !== null && _c !== void 0 ? _c : "false") === "true",
+    username: cliArgs.username || getInput("GITHUB_USERNAME"),
+    token: cliArgs.token || getInput("GITHUB_TOKEN"),
+    enableWhitespace: (_b = cliArgs.enableWhitespace) !== null && _b !== void 0 ? _b : ((_c = getInput("ENABLE_WHITESPACE")) !== null && _c !== void 0 ? _c : "false") === "true",
     defaultColors: cliArgs.defaultColors,
     dark: cliArgs.dark,
     light: cliArgs.light,
-    enableGhostBricks: (_d = cliArgs.enableGhostBricks) !== null && _d !== void 0 ? _d : ((_e = getInput("INPUT_ENABLE_GHOST_BRICKS")) !== null && _e !== void 0 ? _e : "true") === "true",
-    paddleColor: cliArgs.paddleColor || getInput("INPUT_PADDLE_COLOR"),
-    ballColor: cliArgs.ballColor || getInput("INPUT_BALL_COLOR"),
+    enableGhostBricks: (_d = cliArgs.enableGhostBricks) !== null && _d !== void 0 ? _d : ((_e = getInput("ENABLE_GHOST_BRICKS")) !== null && _e !== void 0 ? _e : "true") === "true",
+    paddleColor: cliArgs.paddleColor || getInput("PADDLE_COLOR"),
+    ballColor: cliArgs.ballColor || getInput("BALL_COLOR"),
     bricksColors: cliArgs.bricksColors || bricksColorsFromInput,
-    path: cliArgs.outputPath || getInput("INPUT_OUTPUT_PATH") || "output",
+    path: cliArgs.outputPath || getInput("OUTPUT_PATH") || "output",
 };
 console.log(Object.assign(Object.assign({}, options), { token: "<lolno>" }));
 if (!options.username || !options.token) {

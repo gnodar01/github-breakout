@@ -81,28 +81,28 @@ function parseArgs(argv: string[]): ParsedArgs {
 const cliArgs = parseArgs(process.argv.slice(2));
 
 // Build options from CLI args and environment variables
-const bricksColorsInput = (getInput("INPUT_BRICKS_COLORS") ?? "").split(",");
+const bricksColorsInput = (getInput("BRICKS_COLORS") ?? "").split(",");
 const bricksColorsFromInput =
   bricksColorsInput.length === 5
     ? (bricksColorsInput as [string, string, string, string, string])
     : undefined;
 
 const options = {
-  username: cliArgs.username || getInput("INPUT_GITHUB_USERNAME"),
-  token: cliArgs.token || getInput("INPUT_GITHUB_TOKEN"),
+  username: cliArgs.username || getInput("GITHUB_USERNAME"),
+  token: cliArgs.token || getInput("GITHUB_TOKEN"),
   enableWhitespace:
     cliArgs.enableWhitespace ??
-    (getInput("INPUT_ENABLE_WHITESPACE") ?? "false") === "true",
+    (getInput("ENABLE_WHITESPACE") ?? "false") === "true",
   defaultColors: cliArgs.defaultColors,
   dark: cliArgs.dark,
   light: cliArgs.light,
   enableGhostBricks:
     cliArgs.enableGhostBricks ??
-    (getInput("INPUT_ENABLE_GHOST_BRICKS") ?? "true") === "true",
-  paddleColor: cliArgs.paddleColor || getInput("INPUT_PADDLE_COLOR"),
-  ballColor: cliArgs.ballColor || getInput("INPUT_BALL_COLOR"),
+    (getInput("ENABLE_GHOST_BRICKS") ?? "true") === "true",
+  paddleColor: cliArgs.paddleColor || getInput("PADDLE_COLOR"),
+  ballColor: cliArgs.ballColor || getInput("BALL_COLOR"),
   bricksColors: cliArgs.bricksColors || bricksColorsFromInput,
-  path: cliArgs.outputPath || getInput("INPUT_OUTPUT_PATH") || "output",
+  path: cliArgs.outputPath || getInput("OUTPUT_PATH") || "output",
 };
 
 console.log({ ...options, token: "<lolno>" });
