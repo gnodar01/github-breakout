@@ -24,7 +24,17 @@ interface ParsedArgs {
  */
 function getInput(name: string): string | undefined {
   const envName = `INPUT_${name.replace(/-/g, "_").toUpperCase()}`;
-  return process.env[envName] || process.env[name] || undefined;
+  const envValue = process.env[envName] || process.env[name] || undefined;
+
+  if (envValue === undefined) {
+    console.log(`name not found ${name} (${name})`);
+  } else {
+    console.log(
+      `name found ${name} (${name}) = ${name !== "GITHUB_TOKEN" ? envValue : "<lolno>"}`,
+    );
+  }
+
+  return envValue;
 }
 
 /**
